@@ -28,6 +28,8 @@ namespace AgriculturalStatistics
         public float avgGrowth = -1f;   // -1: nothing planted yet
         public float nutritionNow;      // nutrition per day at today's conditions
         public float nutritionYear;     // nutrition per day averaged over a year
+        public float growthModifier = 1f; // planted crops' real growth rate vs the vanilla factors (mods, boosts)
+        public float conditionFactor = 1f; // noxious haze and drought slowing the crop right now
         public List<string> warnings = new List<string>();
         public IntVec3 jumpCell = IntVec3.Invalid;
     }
@@ -55,6 +57,11 @@ namespace AgriculturalStatistics
     /// harvest takes growDays / 0.55 / rate real days. Each cell gives harvestYield items per harvest (times the
     /// difficulty's crop yield and the harvester's yield stat), each worth the harvested item's nutrition.
     /// Sowing and harvesting time, blight and plant damage are ignored, so these are best-case figures.
+    ///
+    /// Where the crop is already planted, the plant's own GrowthRate is read, so anything a mod adds to it
+    /// (fertilizer, growth boosters, patched growth rates) and today's noxious haze or drought count. The ratio of
+    /// that real rate to the vanilla factors, minus haze and drought, is the row's growth modifier: it is applied to
+    /// the year view and to cells not planted yet. Haze and drought are passing weather, so they only count now.
     /// </summary>
     public static class FarmCalc
     {
@@ -162,6 +169,9 @@ namespace AgriculturalStatistics
         class Acc
         {
             public float fertility, growth, poorSoil, noLight, tooCold, tooHot;
+            public float modSum, condSum;
+            public int modCount;
+            public float emptyNow, emptyYear;   // vanilla-factor nutrition of cells with nothing planted yet
         }
 
         static readonly Dictionary<FarmRow, Acc> accs = new Dictionary<FarmRow, Acc>();
@@ -219,14 +229,39 @@ namespace AgriculturalStatistics
                 }
 
                 float soil = poor ? 0f : PlantUtility.GrowthRateFactorFor_Fertility(plant, fertility);
-                row.nutritionNow += perGrowthDay * soil * light * tempNow;
-                row.nutritionYear += perGrowthDay * soil * light * tempYear;
+                float baseNow = soil * light * tempNow;
+                float baseYear = soil * light * tempYear;
 
                 Plant growing = c.GetPlant(map);
                 if (growing != null && growing.def == plant)
                 {
                     row.plantCount++;
                     acc.growth += growing.Growth;
+                    if (growing.Blighted)
+                        continue;   // a blighted plant doesn't grow; it isn't counted at all
+                    // The real rate, with every mod's multipliers and today's haze or drought. Its light factor is
+                    // swapped for the daytime one used everywhere here: outdoors at night the plant's own is ~0.
+                    float plantLight = growing.GrowthRateFactor_Light;
+                    float conditions = growing.GrowthRateFactor_NoxiousHaze * growing.GrowthRateFactor_Drought;
+                    if (plantLight < 0.01f || baseNow < 0.01f || conditions < 0.01f)
+                    {
+                        // Can't tell mods apart from darkness or cold right now: count it like an empty cell.
+                        acc.emptyNow += perGrowthDay * baseNow;
+                        acc.emptyYear += perGrowthDay * baseYear;
+                        continue;
+                    }
+                    float actual = growing.GrowthRate / plantLight * light;
+                    float modifier = Mathf.Clamp(actual / (baseNow * conditions), 0f, 10f);
+                    acc.modSum += modifier;
+                    acc.condSum += conditions;
+                    acc.modCount++;
+                    row.nutritionNow += perGrowthDay * actual;
+                    row.nutritionYear += perGrowthDay * baseYear * modifier;
+                }
+                else
+                {
+                    acc.emptyNow += perGrowthDay * baseNow;
+                    acc.emptyYear += perGrowthDay * baseYear;
                 }
             }
         }
@@ -236,6 +271,20 @@ namespace AgriculturalStatistics
             Acc acc;
             if (accs.TryGetValue(row, out acc) && row.cells > 0)
             {
+                // Cells not planted yet are assumed to grow like the planted ones (mods, boosts, haze and drought).
+                if (acc.modCount > 0)
+                {
+                    row.growthModifier = acc.modSum / acc.modCount;
+                    row.conditionFactor = acc.condSum / acc.modCount;
+                }
+                row.nutritionNow += acc.emptyNow * row.growthModifier * row.conditionFactor;
+                row.nutritionYear += acc.emptyYear * row.growthModifier;
+                if (row.growthModifier > 1.05f)
+                    row.warnings.Add("AgriStats_NoteBoosted".Translate(row.growthModifier.ToStringPercent()));
+                else if (row.growthModifier < 0.95f)
+                    row.warnings.Add("AgriStats_NoteSlowed".Translate(row.growthModifier.ToStringPercent()));
+                if (row.conditionFactor < 0.95f)
+                    row.warnings.Add("AgriStats_NoteConditions".Translate(row.conditionFactor.ToStringPercent()));
                 row.avgFertility = acc.fertility / row.cells;
                 if (row.plantCount > 0)
                     row.avgGrowth = acc.growth / row.plantCount;

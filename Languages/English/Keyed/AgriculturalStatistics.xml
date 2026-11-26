@@ -43,6 +43,9 @@
   <AgriStats_WarnTooCold>too cold to grow</AgriStats_WarnTooCold>
   <AgriStats_WarnTooHot>too hot to grow</AgriStats_WarnTooHot>
   <AgriStats_WarnNotFood>not food</AgriStats_WarnNotFood>
+  <AgriStats_NoteBoosted>growth boosted to {0} by mods or buildings</AgriStats_NoteBoosted>
+  <AgriStats_NoteSlowed>growth slowed to {0} by mods or buildings</AgriStats_NoteSlowed>
+  <AgriStats_NoteConditions>haze or drought: growing at {0} for now</AgriStats_NoteConditions>
 
   <AgriStats_TotalFood>Total food</AgriStats_TotalFood>
   <AgriStats_ColonyEats>Your colony eats ({0} people)</AgriStats_ColonyEats>

@@ -17,7 +17,10 @@ No Harmony, no dependencies, safe to add or remove mid-save.
 Per cell, nutrition per day = harvest yield x nutrition per harvested item / real days per harvest, where real
 days = grow days x (1 - regrowth after harvest) / 0.55 / growth rate. Plants only grow in daylight (vanilla rests
 them for 45% of the day), and the growth rate is the product of the soil, light and temperature factors the game
-itself uses. Yield includes the difficulty's crop yield and, optionally, your best grower's harvest yield.
+itself uses. Where a crop is already planted, the plant's own growth rate is read instead, so mods that change
+growth (fertilizer, growth boosters, patched growth rates) and noxious haze or drought count; the gap between that
+and the vanilla factors carries over to empty cells and to the year view (haze and drought only count now). Yield
+includes the difficulty's crop yield and, optionally, your best grower's harvest yield.
 
 "Cooked" uses the simple meal recipe's ratio (0.5 nutrition of ingredients into a 0.9 meal in vanilla), "paste"
 the dispenser's (0.3 into 0.9). Sowing and harvesting time, blight and plant damage are not counted, so these are
