@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <AgriStats_ModName>Agricultural Statistics</AgriStats_ModName>
+  <AgriStats_SettingBestGrower>Count harvests at my best grower's yield</AgriStats_SettingBestGrower>
+  <AgriStats_SettingBestGrowerDesc>On: harvests are counted at the plant harvest yield of your best colonist who can grow. Off: a flat 100%.</AgriStats_SettingBestGrowerDesc>
+  <AgriStats_SettingShowNonFood>List zones growing things that aren't food</AgriStats_SettingShowNonFood>
+  <AgriStats_SettingShowNonFoodDesc>Cotton, smokeleaf, healroot, trees and the like. They are never counted as food.</AgriStats_SettingShowNonFoodDesc>
+
+  <AgriStats_Title>Farming</AgriStats_Title>
+  <AgriStats_ViewNow>Right now</AgriStats_ViewNow>
+  <AgriStats_ViewNowDesc>Production at today's temperature, light and soil.</AgriStats_ViewNowDesc>
+  <AgriStats_ViewYear>Year average</AgriStats_ViewYear>
+  <AgriStats_ViewYearDesc>Production averaged over a whole year, using this map's seasons for outdoor fields. Indoor rooms are assumed to stay at today's temperature.</AgriStats_ViewYearDesc>
+  <AgriStats_HarvesterBest>Harvests counted at {0}'s plant harvest yield ({1}). Best-case figures: sowing and harvesting time and blight are not counted.</AgriStats_HarvesterBest>
+  <AgriStats_HarvesterFlat>Harvests counted at {0} yield. Best-case figures: sowing and harvesting time and blight are not counted.</AgriStats_HarvesterFlat>
+  <AgriStats_NoFarms>No growing zones or plant growers on this map.</AgriStats_NoFarms>
+
+  <AgriStats_ColZone>Zone</AgriStats_ColZone>
+  <AgriStats_ColZoneDesc>The growing zone, or all plant growers of one kind growing the same crop. Click a row to jump to it.</AgriStats_ColZoneDesc>
+  <AgriStats_ColCrop>Crop</AgriStats_ColCrop>
+  <AgriStats_ColCropDesc>What the zone is set to grow.</AgriStats_ColCropDesc>
+  <AgriStats_ColCells>Cells</AgriStats_ColCells>
+  <AgriStats_ColCellsDesc>Number of growing cells.</AgriStats_ColCellsDesc>
+  <AgriStats_ColFertility>Fertility</AgriStats_ColFertility>
+  <AgriStats_ColFertilityDesc>Average soil fertility of the cells.</AgriStats_ColFertilityDesc>
+  <AgriStats_ColGrowth>Growth</AgriStats_ColGrowth>
+  <AgriStats_ColGrowthDesc>Average growth of the crop already planted.</AgriStats_ColGrowthDesc>
+  <AgriStats_ColNutrition>Nutrition/day</AgriStats_ColNutrition>
+  <AgriStats_ColNutritionDesc>Nutrition produced per day, in the same unit pawns eat. A vanilla adult needs about 1.6 a day.</AgriStats_ColNutritionDesc>
+  <AgriStats_ColRaw>Feeds raw</AgriStats_ColRaw>
+  <AgriStats_ColRawDesc>How many of your people this feeds if they eat it raw.</AgriStats_ColRawDesc>
+  <AgriStats_ColCooked>Feeds cooked</AgriStats_ColCooked>
+  <AgriStats_ColCookedDesc>How many of your people this feeds cooked into simple meals, which turn a little raw food into a full meal.</AgriStats_ColCookedDesc>
+  <AgriStats_ColPaste>Feeds paste</AgriStats_ColPaste>
+  <AgriStats_ColPasteDesc>How many of your people this feeds through a nutrient paste dispenser, the most food-efficient way to eat.</AgriStats_ColPasteDesc>
+  <AgriStats_ColNotes>Notes</AgriStats_ColNotes>
+  <AgriStats_ColNotesDesc>Anything stopping the crop from growing well.</AgriStats_ColNotesDesc>
+
+  <AgriStats_AnimalFeed>animal feed</AgriStats_AnimalFeed>
+  <AgriStats_WarnSowingOff>sowing off</AgriStats_WarnSowingOff>
+  <AgriStats_WarnPoorSoil>soil too poor</AgriStats_WarnPoorSoil>
+  <AgriStats_WarnNoLight>not enough light</AgriStats_WarnNoLight>
+  <AgriStats_WarnTooCold>too cold to grow</AgriStats_WarnTooCold>
+  <AgriStats_WarnTooHot>too hot to grow</AgriStats_WarnTooHot>
+  <AgriStats_WarnNotFood>not food</AgriStats_WarnNotFood>
+
+  <AgriStats_TotalFood>Total food</AgriStats_TotalFood>
+  <AgriStats_ColonyEats>Your colony eats ({0} people)</AgriStats_ColonyEats>
+  <AgriStats_Surplus>Surplus or shortfall (people)</AgriStats_Surplus>
+  <AgriStats_AnimalLine>Animal feed: {0} nutrition/day. {1} animals that eat it need {2}/day.</AgriStats_AnimalLine>
+  <AgriStats_AnimalLineNone>Animal feed: {0} nutrition/day. No colony animals that eat it.</AgriStats_AnimalLineNone>
+</LanguageData>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <MainButtonDef>
+    <defName>AgriStats_Farming</defName>
+    <label>farming</label>
+    <description>Your farms at a glance: what each growing zone produces and how many people it feeds.</description>
+    <tabWindowClass>AgriculturalStatistics.MainTabWindow_Farming</tabWindowClass>
+    <order>51</order>
+  </MainButtonDef>
+</Defs>
